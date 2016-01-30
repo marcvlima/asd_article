@@ -1,0 +1,183 @@
+\documentclass[
+	% -- opções da classe memoir --
+	article,			% indica que é um artigo acadêmico
+	11pt,				% tamanho da fonte
+	oneside,			% para impressão apenas no verso. Oposto a twoside
+	a4paper,			% tamanho do papel. 
+	% -- opções da classe abntex2 --
+	%chapter=TITLE,		% títulos de capítulos convertidos em letras maiúsculas
+	%section=TITLE,		% títulos de seções convertidos em letras maiúsculas
+	%subsection=TITLE,	% títulos de subseções convertidos em letras maiúsculas
+	%subsubsection=TITLE % títulos de subsubseções convertidos em letras maiúsculas
+	% -- opções do pacote babel --
+	english,			% idioma adicional para hifenização
+	brazil,				% o último idioma é o principal do documento
+	sumario=tradicional
+]{abntex2}
+
+% ---
+% Pacotes fundamentais 
+% ---
+\usepackage{lmodern}			% Usa a fonte Latin Modern
+\usepackage[T1]{fontenc}		% Selecao de codigos de fonte.
+\usepackage[utf8]{inputenc}		% Codificacao do documento (conversão automática dos acentos)
+\usepackage{indentfirst}		% Indenta o primeiro parágrafo de cada seção.
+\usepackage{nomencl} 			% Lista de simbolos
+\usepackage{color}				% Controle das cores
+\usepackage{graphicx}			% Inclusão de gráficos
+\usepackage{microtype} 			% para melhorias de justificação
+% ---
+
+% ---
+% Pacotes de citações
+% ---
+\usepackage[brazilian,hyperpageref]{backref}	 % Paginas com as citações na bibl
+\usepackage[alf]{abntex2cite}	% Citações padrão ABNT
+% ---
+
+
+\titulo{Camada Lógica de Cache na Arquitetura Aplicações Móveis Multi Plataforma Baseada em Tecnologias Abertas}
+\autor{Marcus Vinícius de Lima\thanks{\url{marcvlima@gmail.com}}}
+\local{Brasil}
+
+% ---
+% Configurações de aparência do PDF final
+
+% alterando o aspecto da cor azul
+\definecolor{blue}{RGB}{41,5,195}
+
+% informações do PDF
+\makeatletter
+\hypersetup{
+	%pagebackref=true,
+	pdftitle={\@title}, 
+	pdfauthor={\@author},
+	pdfsubject={Modelo de artigo científico com abnTeX2},
+	pdfcreator={LaTeX with abnTeX2},
+	pdfkeywords={abnt}{latex}{abntex}{abntex2}{atigo científico}, 
+	colorlinks=true,       		% false: boxed links; true: colored links
+	linkcolor=blue,          	% color of internal links
+	citecolor=blue,        		% color of links to bibliography
+	filecolor=magenta,      		% color of file links
+	urlcolor=blue,
+	bookmarksdepth=4
+}
+\makeatother
+% --- 
+
+% ---
+% compila o indice
+% ---
+\makeindex
+% ---
+
+% ---
+% Altera as margens padrões
+% ---
+\setlrmarginsandblock{3cm}{3cm}{*}
+\setulmarginsandblock{3cm}{3cm}{*}
+\checkandfixthelayout
+% ---
+
+% --- 
+% Espaçamentos entre linhas e parágrafos 
+% --- 
+
+% O tamanho do parágrafo é dado por:
+\setlength{\parindent}{1.3cm}
+
+% Controle do espaçamento entre um parágrafo e outro:
+\setlength{\parskip}{0.2cm}  % tente também \onelineskip
+
+% Espaçamento simples
+\SingleSpacing
+
+
+\begin{document}
+\selectlanguage{brazil}
+\maketitle
+
+\selectlanguage{english}
+\begin{abstract}
+Abstract text.
+\end{abstract}
+
+\selectlanguage{brazil}
+
+\begin{abstract}
+Resumo em português.
+\end{abstract}
+
+\tableofcontents
+	
+\section{Introdução} \label{introduction}
+\addcontentsline{toc}{section}{SecIntrodução}
+
+\section{Requisitos Arquiteturais para uma Aplicação Móvel}
+\addcontentsline{toc}{section}{SecCondutoresAplicacaoMovel}
+Um dos grandes fatores para garantia de qualidade no desenvolvimento de aplicações consiste na correta identificação de seus condutores arquiteturais e os mecanismos que irão assegurar uma implementação que os atenda \cite{bachmann2001introduction}.
+
+Condutores arquiteturais são o uma combinação de requisitos funcionais, requisitos de qualidade e restrições que influenciam na determinação das características arquiteturais da aplicação \cite{bachmann2001introduction}.
+
+No contexto de aplicações móveis os seguintes requisitos arquiteturais são elencados:
+\begin{enumerate}
+	\item Suporte para conexões instáveis \cite{rathore2007overview}:
+	
+	As tecnologias de telecomunicações móveis implementadas até o presente momento não asseguram instabilidade e garantem a manutenção de conetividade dos dispositivos móveis. Dessa maneira a aplicação deve estar preparada para eventuais falhas de conectividade.
+	
+	\item Suporte para baixa largura de conexão \cite{rathore2007overview}:
+	
+	Mesmo com o avanço tecnológico as redes de telefonia móveis em sua grande maioria oferecem velocidades de conexão inferiores as plataformas fixas. Portanto aplicações uma aplicação móvel deve estar preparada para assegurar que as operações sejam realizadas mesmo em cenários de baixa largura de banda, como por exemplo otimizando a quantidade de dados trafegados entre cliente servidor.
+	
+	\item Suporte para velocidades de \emph{upstream} reduzidas \cite{rathore2007overview}:
+	
+	Em redes móveis a velocidade de conexão na direção cliente/servidor é inferior a velocidade de conexão na direção servidor/cliente. Deste as requisições de uma aplicação móvel para o servidor devem ser otimizadas para conter a menor quantidade de dados possível.
+	
+	\item Otimização de bateria \cite{rathore2007overview}:
+	
+	A fonte de energia em dispositivos móveis é um dos recursos que deve ser prioritariamente preservado, pois está diretamente relacionado ao tempo de autonomia do dispositivo. Uma aplicação móvel portanto deve ser projetada de modo a consumir a menor quantidade de energia possível, como por exemplo requerendo uma menor quantidade de memória RAM para sua execução.
+	
+	
+	
+\end{enumerate}
+
+\section{Aplicações Móveis Multiplataforma}
+\addcontentsline{toc}{section}{SecAplicacoesMultiplataforma}
+
+\section{Cache de Aplicações Móveis}
+\addcontentsline{toc}{section}{SecCacheMovel}
+
+\section{Princípios de Separação de Responsabilidades da Aplicação em Camadas Lógicas}
+\addcontentsline{toc}{section}{SecCacheMovel}
+
+\section{Arquitetura Proposta}
+\addcontentsline{toc}{section}{SecArquiteturaProposta}
+
+\subsection{Importancia de Tecnologias Abertas}
+\addcontentsline{toc}{subsection}{SubSecTecnologiasAbertas}
+
+\subsection{Apache Cordova}
+\addcontentsline{toc}{subsection}{SubSecApacheCordova}
+
+\subsection{SQLite}
+\addcontentsline{toc}{subsection}{SubSecSQLite}
+
+\subsection{JavaScript}
+
+\subsection{AngularJS}
+\addcontentsline{toc}{subsection}{SubSecAngularJS}
+
+\subsection{Prova de Conceito da Arquitetura Proposta}
+\addcontentsline{toc}{subsection}{SubSecPOC}
+
+\section{Conclusão} \label{introduction}
+\addcontentsline{toc}{section}{SecConclusao}
+
+\section{Trabalhos Futuros} \label{introduction}
+\addcontentsline{toc}{section}{SecTrabalhosFuturos}
+Segundo \cite{ivan2014cloud}. fasdfasdfas
+
+\bibliography{artigo}{}
+
+
+\end{document}
