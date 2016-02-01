@@ -25,7 +25,12 @@
 \usepackage{nomencl} 			% Lista de simbolos
 \usepackage{color}				% Controle das cores
 \usepackage{graphicx}			% Inclusão de gráficos
-\usepackage{microtype} 			% para melhorias de justificação
+\usepackage{microtype} 			% Para melhorias de justificação
+
+% ---
+% Pacotes glossaries
+% ---
+\usepackage[subentrycounter,seeautonumberlist]{glossaries}
 % ---
 
 % ---
@@ -72,6 +77,21 @@
 % ---
 
 % ---
+% entradas do glossario
+% ---
+ \newglossaryentry{sdk}{
+ 	name={SDK},
+ 	plural={SDKs},
+ 	description={Software Development Kit - Kit de Desenvolvimento de Software. Conjunto de ferramentas empregadas no processo de desenvolvimento de software}
+}
+\newglossaryentry{back-end}{
+	name={Back-end},
+	plural={Back-ends},
+	description={Num sistema que emprega a arquitetura cliente servidor, o termo back end e empregado para referenciar o conjunto de camadas que constituem a parte servidor}
+}
+
+\makeglossaries
+% ---
 % Altera as margens padrões
 % ---
 \setlrmarginsandblock{3cm}{3cm}{*}
@@ -92,6 +112,11 @@
 % Espaçamento simples
 \SingleSpacing
 
+% ---
+% Exemplo de configurações do glossairo
+\renewcommand*{\glsseeformat}[3][\seename]{\textit{#1}  
+	\glsseelist{#2}}
+% ---
 
 \begin{document}
 \selectlanguage{brazil}
@@ -109,11 +134,11 @@ Resumo em português.
 \end{abstract}
 
 \tableofcontents
-	
+
 \section{Introdução} \label{introduction}
 \addcontentsline{toc}{section}{SecIntrodução}
 
-\section{Requisitos Arquiteturais para uma Aplicação Móvel}
+\section{Condutores Arquiteturais para uma Aplicação Móvel}
 \addcontentsline{toc}{section}{SecCondutoresAplicacaoMovel}
 Um dos grandes fatores para garantia de qualidade no desenvolvimento de aplicações consiste na correta identificação de seus condutores arquiteturais e os mecanismos que irão assegurar uma implementação que os atenda \cite{bachmann2001introduction}.
 
@@ -137,12 +162,25 @@ No contexto de aplicações móveis os seguintes requisitos arquiteturais são e
 	
 	A fonte de energia em dispositivos móveis é um dos recursos que deve ser prioritariamente preservado, pois está diretamente relacionado ao tempo de autonomia do dispositivo. Uma aplicação móvel portanto deve ser projetada de modo a consumir a menor quantidade de energia possível, como por exemplo requerendo uma menor quantidade de memória RAM para sua execução.
 	
+	\item Espaço de armazenamento reduzido \cite{tiffany2008guide}:
 	
+	O espaço de armazenamento não volátil em dispositivos móveis é consideravelmente menor do que em dispositivos fixos. Portanto, a aplicação deve otimizar a quantidade de dados que é armazenada para o seu funcionamento.
 	
 \end{enumerate}
 
+Como este trabalho tem por objetivo a elaboração de uma arquitetura genérica apenas os condutores arquiteturais mais importantes de uma aplicação móvel estão sendo considerados. Ao considerar uma aplicação específica, os requisitos arquiteturais devem ser definidos de maneira mais detalhada. Uma das metodologias que poderia ser empregada para definição de requisitos arquiteturais, está definida em \cite{eeles2005capturing}.
+
 \section{Aplicações Móveis Multiplataforma}
 \addcontentsline{toc}{section}{SecAplicacoesMultiplataforma}
+Recentemente as aplicações móveis tem apresentado um crescimento expressivo. Desde a queda de popularidade das plataformas mobile BlackBerry, Bada e Symbian, iOS e Android tem adquirido uma força expressiva no mercado \cite{dalmasso2013survey}.
+
+Porém, a diversidade das plataformas e a variedade de \gls{sdk} e ferramentas disponíveis criou uma segmentação desafiada para o mercado de desenvolvimento de aplicações móveis No processo de desenvolvimento uma série de fatores precisam ser considerados como por exemplo a experiência de usuário oferecida, estabilidade do framework, facilidade de manutenção, o custo de desenvolvimento multiplataforma e o tempo de mercado da aplicação \cite{dalmasso2013survey}.
+
+A grande maioria dos desenvolvedores e organizações querem atingir a maior fatia de mercado com seus aplicativos. Para tal é necessário que o aplicativo esteja disponível nas principais plataformas mobile como o iOS, Android e Windows Phone. 
+
+Porém o desenvolvimento para estas plataformas requerem amplo conhecimento do desenvolvedor sobre as mesmas e sobre os seus respectivos \gls{sdk}, o que eleva o custo de desenvolvimento e a complexidade do processo. Para contrapor a esta barreira imposta pela pluralidade de plataformas de desenvolvimento móvel entra em cena a abordagem multiplataforma, capaz de reduzir o esforço de desenvolvimento e o tempo para lançamento de aplicativos no mercado \cite{dalmasso2013survey}.
+
+Como citado em \cite{shehab2014reducing} a vantagem de custo e tempo de mercado proporcionado por esta abordagem está promovendo o surgimento de distintas plataformas que a adotam. Essas plataformas estão competindo pela adoção de desenvolvedores em características como o número de plataformas nativas suportadas, acesso a funções nativas dos dispositivos móveis, facilidade de acesso ao \gls{back-end} e por melhorias de performance. 
 
 \section{Cache de Aplicações Móveis}
 \addcontentsline{toc}{section}{SecCacheMovel}
@@ -175,9 +213,43 @@ No contexto de aplicações móveis os seguintes requisitos arquiteturais são e
 
 \section{Trabalhos Futuros} \label{introduction}
 \addcontentsline{toc}{section}{SecTrabalhosFuturos}
-Segundo \cite{ivan2014cloud}. fasdfasdfas
 
 \bibliography{artigo}{}
 
+% ----------------------------------------------------------
+% Glossário
+% ----------------------------------------------------------
+
+% ---
+% Define nome e preâmbulo do glossário
+% ---
+\renewcommand{\glossaryname}{Glossário}
+%\renewcommand{\glossarypreamble}{Esta é a descrição do glossário.\\ \\}
+
+% ---
+% Traduções para o ambiente glossaries
+% ---
+\providetranslation{Glossary}{Glossário}
+\providetranslation{Acronyms}{Siglas}
+\providetranslation{Notation (glossaries)}{Notação}
+\providetranslation{Description (glossaries)}{Descrição}
+\providetranslation{Symbol (glossaries)}{Símbolo}
+\providetranslation{Page List (glossaries)}{Lista de Páginas}
+\providetranslation{Symbols (glossaries)}{Símbolos}
+\providetranslation{Numbers (glossaries)}{Números} 
+% ---
+
+% ---
+% Imprime o glossário
+% ---
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{\glossaryname}
+% \glossarystyle{index}
+% \glossarystyle{altlisthypergroup}
+\glossarystyle{tree}
+\printglossaries
+% ---
+% ---
 
 \end{document}
