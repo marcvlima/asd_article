@@ -40,6 +40,10 @@
 \usepackage[alf]{abntex2cite}	% Citações padrão ABNT
 % ---
 
+%Muda o contador para sections.
+\usepackage{chngcntr}
+\counterwithin{section}{chapter}
+
 
 \titulo{Camada Lógica de Cache na Arquitetura Aplicações Móveis Multi Plataforma Baseada em Tecnologias Abertas}
 \autor{Marcus Vinícius de Lima\thanks{\url{marcvlima@gmail.com}}}
@@ -135,11 +139,11 @@ Resumo em português.
 
 \tableofcontents
 
-\section{Introdução} \label{introduction}
-\addcontentsline{toc}{section}{SecIntrodução}
-
+\chapter{Introdução}
+\section{Problema}
+\section{Objetivos}
+\chapter{Referencial Teórico}
 \section{Condutores Arquiteturais para uma Aplicação Móvel}
-\addcontentsline{toc}{section}{SecCondutoresAplicacaoMovel}
 Um dos grandes fatores para garantia de qualidade no desenvolvimento de aplicações consiste na correta identificação de seus condutores arquiteturais e os mecanismos que irão assegurar uma implementação que os atenda \cite{bachmann2001introduction}.
 
 Condutores arquiteturais são o uma combinação de requisitos funcionais, requisitos de qualidade e restrições que influenciam na determinação das características arquiteturais da aplicação \cite{bachmann2001introduction}.
@@ -171,10 +175,9 @@ No contexto de aplicações móveis os seguintes requisitos arquiteturais são e
 Como este trabalho tem por objetivo a elaboração de uma arquitetura genérica apenas os condutores arquiteturais mais importantes de uma aplicação móvel estão sendo considerados. Ao considerar uma aplicação específica, os requisitos arquiteturais devem ser definidos de maneira mais detalhada. Uma das metodologias que poderia ser empregada para definição de requisitos arquiteturais, está definida em \cite{eeles2005capturing}.
 
 \section{Aplicações Móveis Multiplataforma}
-\addcontentsline{toc}{section}{SecAplicacoesMultiplataforma}
 Recentemente as aplicações móveis tem apresentado um crescimento expressivo. Desde a queda de popularidade das plataformas mobile BlackBerry, Bada e Symbian, iOS e Android tem adquirido uma força expressiva no mercado \cite{dalmasso2013survey}.
 
-Porém, a diversidade das plataformas e a variedade de \gls{sdk} e ferramentas disponíveis criou uma segmentação desafiada para o mercado de desenvolvimento de aplicações móveis No processo de desenvolvimento uma série de fatores precisam ser considerados como por exemplo a experiência de usuário oferecida, estabilidade do framework, facilidade de manutenção, o custo de desenvolvimento multiplataforma e o tempo de mercado da aplicação \cite{dalmasso2013survey}.
+Porém, a diversidade das plataformas e a variedade de \gls{sdk} e ferramentas disponíveis criou uma segmentação desafiadora para o mercado de desenvolvimento de aplicações móveis No processo de desenvolvimento uma série de fatores precisam ser considerados como por exemplo a experiência de usuário oferecida, estabilidade do framework, facilidade de manutenção, o custo de desenvolvimento multiplataforma e o tempo de mercado da aplicação \cite{dalmasso2013survey}.
 
 A grande maioria dos desenvolvedores e organizações querem atingir a maior fatia de mercado com seus aplicativos. Para tal é necessário que o aplicativo esteja disponível nas principais plataformas mobile como o iOS, Android e Windows Phone. 
 
@@ -183,36 +186,82 @@ Porém o desenvolvimento para estas plataformas requerem amplo conhecimento do d
 Como citado em \cite{shehab2014reducing} a vantagem de custo e tempo de mercado proporcionado por esta abordagem está promovendo o surgimento de distintas plataformas que a adotam. Essas plataformas estão competindo pela adoção de desenvolvedores em características como o número de plataformas nativas suportadas, acesso a funções nativas dos dispositivos móveis, facilidade de acesso ao \gls{back-end} e por melhorias de performance. 
 
 \section{Cache de Aplicações Móveis}
-\addcontentsline{toc}{section}{SecCacheMovel}
+
+O paradigma cliente-servidor para aplicações móveis apresenta peculiaridades significativas quando comparado as aplicações tradicionais. Tais peculiaridades são provocadas sobretudo por dois fatores: perda de conectividade frequente e baixa largura de banda dos dispositivos móveis \cite{rathore2007overview}.
+Estes dois fatores combinados a outras limitações geram a necessidade de que seja reduzida a comunicação cliente servidor, tornando o mecanismo de cache local nos dispositivos móveis como uma solução viável \cite{rathore2007overview}.
+Sobretudo as seguintes limitações de recursos em dispositivos móveis merecem especial atenção no planejamento e desenvolvimento de mecanismos de cache em aplicações móveis: \cite{rathore2007overview}.
+\begin{enumerate}
+	\item Eficiência de pacotes transmitidos:
+	A quantidade de pacotes transmitidos e recebidos na comunicação com o servidor deve ser minimizada.
+	
+	\item Otimização de bateria:
+	O consumo de energia utilizado para executar o mecanismo de caching deve ser minimizado.
+\end{enumerate}
+ 
+ Em \cite{rathore2007overview} os mecanismos de cache são caracterizados por 3 componentes: granularidade de caching, estratégia de coerência de cache e política de substituição de cache.
+ 
+
+
+\subsection{Granularidade de Cache}
+Granularidade de caching diz respeito a escolha do tipo correto de informação que deve ser mantido em cache para permitir a correta utilização do armazenamento do dispositivo.
+
+Em \cite{rathore2007overview} os seguintes níveis de granularidade são recomendados para aplicações móveis:
+
+\begin{enumerate}
+	\item Caching de Objetos: Todos os atributos de um objeto que são muito acessados são armazenados pelo cliente, independente se a primeira consulta poderia ser suprida apenas com um subconjunto dos atributos retornados pelo servidor.
+	
+	\item Caching de Atributos: Apenas os atributos que são relevantes para cada consulta são armazenados. Essa granularidade economiza largura de banda e espaço de armazenamento, elevando a taxa de sucesso de caching. Porém quando diferentes consultas precisam de diferentes atributos do mesmo objeto é melhor armazenar o objeto inteiro.
+	
+	\item Caching Hibrido: Todos os atributos de um objeto com alta probabilidade de serem acessados por consultas futuras também são armazenados.
+	
+	\item Caching Semântico: Os dados de caching são fragmentados e indexados de modo que quando uma nova consulta não é totalmente suprida pelos itens de cache disponíveis é disparada uma requisição para o servidor para obter apenas os dados complementares necessários.
+	
+\end{enumerate}
+
+\subsection{Estratégia de Coerência de Caching}
+Uma vez definido que informações devem ser mantidas em cache, o próximo passo é definir a estratégia de coerência de cache, que consiste em manter as informações do cache consistentes com os dados do servidor. Nesse processo o cliente reconhece as alterações realizadas no servidor e deve marcar o item desatualizado como inválido.
+
+Segundo \cite{rathore2007overview} uma invalidação de cache pode ocorrer por duas razões:
+\begin{enumerate}
+	\item Invalidação temporal-dependente:  Quando algum item é alterado no servidor.
+	\item Invalidação dependente de localização: Quando a mudança de localização do cliente provoca a invalidação do item.
+\end{enumerate}
+
+Apesar de muitos mecanismos de invalidação de cache terem sido propostos nas últimas décadas, em \cite{rathore2007overview} estes são classificados em 3 grandes categorias:
+
+\begin{enumerate}
+	\item Servidor com Controle de Estado: O servidor conhece o estado e os itens mantidos em cache por cada cliente. Cada vez que um item é alterado no servidor o mesmo notifica todos os clientes que cujo cache local estejam associados a este item da invalidação. Este mecanismo que dificulta o escalonamento é conhecido como \emph{push-based} (direção servidor-cliente).
+	\item Verificação do Cliente: A cada nova consulta que precisa ser suprida o cliente se comunica com o cliente para confirmar a validade do item armazenado no cache.
+	\item Servidor sem Controle de Estado: O servidor desconhece a localização ou conteúdo do cache do cliente, e dispara periodicamente relatórios indicando os itens alterados. Estes relatórios são avaliados pelo cliente para determinar se algum item do cache deve ser invalidado.
+\end{enumerate}
+
+\subsection{Política de Substituição de Caching}
+Após serem identificados os itens de cache inválidos, a politica de substituição de cache define como a informação armazenada no cliente deverá ser atualizada para refletir as mudanças no servidor.
 
 \section{Princípios de Separação de Responsabilidades da Aplicação em Camadas Lógicas}
-\addcontentsline{toc}{section}{SecCacheMovel}
+
+\chapter{Metodologia}
+
+\chapter{Desenvolvimento}
 
 \section{Arquitetura Proposta}
-\addcontentsline{toc}{section}{SecArquiteturaProposta}
 
 \subsection{Importancia de Tecnologias Abertas}
-\addcontentsline{toc}{subsection}{SubSecTecnologiasAbertas}
 
 \subsection{Apache Cordova}
-\addcontentsline{toc}{subsection}{SubSecApacheCordova}
 
 \subsection{SQLite}
-\addcontentsline{toc}{subsection}{SubSecSQLite}
 
 \subsection{JavaScript}
 
 \subsection{AngularJS}
-\addcontentsline{toc}{subsection}{SubSecAngularJS}
 
 \subsection{Prova de Conceito da Arquitetura Proposta}
-\addcontentsline{toc}{subsection}{SubSecPOC}
 
-\section{Conclusão} \label{introduction}
-\addcontentsline{toc}{section}{SecConclusao}
 
-\section{Trabalhos Futuros} \label{introduction}
-\addcontentsline{toc}{section}{SecTrabalhosFuturos}
+\chapter[ChaConclusao]{Conclusão}
+
+\section{Trabalhos Futuros}
 
 \bibliography{artigo}{}
 
