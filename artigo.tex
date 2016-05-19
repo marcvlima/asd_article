@@ -143,6 +143,48 @@ Resumo em português.
 \section{Problema}
 \section{Objetivos}
 \chapter{Referencial Teórico}
+\section{Arquitetura de Software}
+
+Segundo \cite{bass2012practice} a arquitetura de software é um conjunto de estruturas necessárias para permitir racionalizar sobre um sistema, que compreende desde elementos de software os relacionamentos entre estes e propriedades definidas sobre ambos. Segundo os autores as seguintes 
+
+
+
+\section{Aplicações Móveis Multiplataforma}
+Recentemente as aplicações móveis tem apresentado um crescimento expressivo. Desde a queda de popularidade das plataformas mobile BlackBerry, Bada e Symbian, iOS e Android tem adquirido uma força expressiva no mercado \cite{dalmasso2013survey}.
+
+Porém, a diversidade das plataformas e a variedade de \gls{sdk} e ferramentas disponíveis criou uma segmentação desafiadora para o mercado de desenvolvimento de aplicações móveis \cite{dalmasso2013survey}.
+
+A grande maioria dos desenvolvedores e organizações querem atingir a maior fatia de mercado com seus aplicativos. Para tal é necessário que o aplicativo esteja disponível nas principais plataformas mobile como o iOS, Android e Windows Phone. 
+
+Porém o desenvolvimento para estas plataformas requerem amplo conhecimento do desenvolvedor sobre as mesmas e sobre os seus respectivos \gls{sdk}, o que eleva o custo de desenvolvimento e a complexidade do processo. Para contrapor a esta barreira imposta pela pluralidade de plataformas de desenvolvimento móvel, entra em cena a abordagem multiplataforma, capaz de reduzir o esforço de desenvolvimento e o tempo para lançamento de aplicativos no mercado \cite{dalmasso2013survey}.
+
+Como citado em \cite{shehab2014reducing} a vantagem de custo e tempo de mercado proporcionado por esta abordagem está promovendo o surgimento de distintas plataformas que a adotam. Essas plataformas estão competindo pela adoção de desenvolvedores em características como o número de plataformas nativas suportadas, acesso a funções nativas dos dispositivos móveis, facilidade de acesso ao \gls{back-end} e por melhorias de performance. 
+
+\section{Cache de Aplicações Móveis}
+
+O paradigma cliente-servidor para aplicações móveis apresenta peculiaridades significativas quando comparado as aplicações tradicionais, provocadas sobretudo por dois fatores: perda de conectividade frequente e baixa largura de banda dos dispositivos móveis \cite{rathore2007overview}.
+Tais fatores geram a necessidade de que seja reduzida a comunicação cliente servidor, tornando o mecanismo de cache uma solução amplamente desejável \cite{rathore2007overview}.
+
+A otimização do tempo de resposta do ponto de vista do usuário de aplicações móveis é apresentada em \cite{xing2015user} também como justificativa para o mecanismo de cache.
+ 
+ Em \cite{rathore2007overview} os mecanismos de cache são caracterizados por 3 componentes: granularidade de caching, estratégia de coerência de cache e política de substituição de cache.
+
+\subsection{Granularidade de Cache}
+Granularidade de caching diz respeito a escolha do tipo correto de informação que deve ser mantido em cache para permitir a correta utilização do armazenamento do dispositivo.
+
+\subsection{Estratégia de Coerência de Caching}
+Uma vez definido que informações devem ser mantidas em cache, o próximo passo é definir a estratégia de coerência de cache, que consiste em manter as informações do cache consistentes com os dados do servidor..
+
+\begin{enumerate}
+	\item Invalidação temporal-dependente:  Quando algum item é alterado no servidor.
+	\item Invalidação dependente de localização: Quando a mudança de localização do cliente provoca a invalidação do item.
+\end{enumerate}
+
+\subsection{Política de Substituição de Caching}
+Após serem identificados os itens de cache inválidos, a politica de substituição de cache define como a informação armazenada no cliente deverá ser atualizada quando é atingido um limite local de armazenamento.
+
+Um dos mecanismos mais comumente utilizados para substituição de cache é o algoritmo de LRU \emph{Least Recent User}, onde o item com maior tempo sem ser utilizado pela aplicação é substituído \cite{xing2015user}.
+
 \section{Condutores Arquiteturais para uma Aplicação Móvel}
 Um dos grandes fatores para garantia de qualidade no desenvolvimento de aplicações consiste na correta identificação de seus condutores arquiteturais e os mecanismos que irão assegurar uma implementação que os atenda \cite{bachmann2001introduction}.
 
@@ -150,97 +192,47 @@ Condutores arquiteturais são o uma combinação de requisitos funcionais, requi
 
 No contexto de aplicações móveis os seguintes requisitos arquiteturais são elencados:
 \begin{enumerate}
-	\item Suporte para conexões instáveis \cite{rathore2007overview}:
+	\item Suporte para conexões instáveis \cite{tiffany2008guide}: A aplicação deve estar preparada para eventuais falhas de conectividade.
 	
-	As tecnologias de telecomunicações móveis implementadas até o presente momento não asseguram instabilidade e garantem a manutenção de conetividade dos dispositivos móveis. Dessa maneira a aplicação deve estar preparada para eventuais falhas de conectividade.
+	\item Suporte para baixa largura de conexão \cite{tiffany2008guide}: Uma aplicação móvel deve estar preparada para assegurar que as operações sejam realizadas mesmo em cenários de baixa largura de banda.
 	
-	\item Suporte para baixa largura de conexão \cite{rathore2007overview}:
+	\item Suporte para velocidades de \emph{upstream} reduzidas \cite{rathore2007overview}: As requisições de uma aplicação móvel para o servidor devem ser otimizadas para conter a menor quantidade de dados possível.
 	
-	Mesmo com o avanço tecnológico as redes de telefonia móveis em sua grande maioria oferecem velocidades de conexão inferiores as plataformas fixas. Portanto aplicações uma aplicação móvel deve estar preparada para assegurar que as operações sejam realizadas mesmo em cenários de baixa largura de banda, como por exemplo otimizando a quantidade de dados trafegados entre cliente servidor.
+	\item Otimização de bateria \cite{rathore2007overview}: Uma aplicação móvel deve ser projetada de modo a consumir a menor quantidade de energia possível.
 	
-	\item Suporte para velocidades de \emph{upstream} reduzidas \cite{rathore2007overview}:
-	
-	Em redes móveis a velocidade de conexão na direção cliente/servidor é inferior a velocidade de conexão na direção servidor/cliente. Deste as requisições de uma aplicação móvel para o servidor devem ser otimizadas para conter a menor quantidade de dados possível.
-	
-	\item Otimização de bateria \cite{rathore2007overview}:
-	
-	A fonte de energia em dispositivos móveis é um dos recursos que deve ser prioritariamente preservado, pois está diretamente relacionado ao tempo de autonomia do dispositivo. Uma aplicação móvel portanto deve ser projetada de modo a consumir a menor quantidade de energia possível, como por exemplo requerendo uma menor quantidade de memória RAM para sua execução.
-	
-	\item Espaço de armazenamento reduzido \cite{tiffany2008guide}:
-	
-	O espaço de armazenamento não volátil em dispositivos móveis é consideravelmente menor do que em dispositivos fixos. Portanto, a aplicação deve otimizar a quantidade de dados que é armazenada para o seu funcionamento.
+	\item Espaço de armazenamento reduzido \cite{tiffany2008guide}: Uma aplicação deve otimizar a quantidade de dados que é armazenada para o seu funcionamento.
 	
 \end{enumerate}
 
 Como este trabalho tem por objetivo a elaboração de uma arquitetura genérica apenas os condutores arquiteturais mais importantes de uma aplicação móvel estão sendo considerados. Ao considerar uma aplicação específica, os requisitos arquiteturais devem ser definidos de maneira mais detalhada. Uma das metodologias que poderia ser empregada para definição de requisitos arquiteturais, está definida em \cite{eeles2005capturing}.
 
-\section{Aplicações Móveis Multiplataforma}
-Recentemente as aplicações móveis tem apresentado um crescimento expressivo. Desde a queda de popularidade das plataformas mobile BlackBerry, Bada e Symbian, iOS e Android tem adquirido uma força expressiva no mercado \cite{dalmasso2013survey}.
+\section{Separação de Responsabilidades da Aplicação em Camadas Lógicas}
 
-Porém, a diversidade das plataformas e a variedade de \gls{sdk} e ferramentas disponíveis criou uma segmentação desafiadora para o mercado de desenvolvimento de aplicações móveis No processo de desenvolvimento uma série de fatores precisam ser considerados como por exemplo a experiência de usuário oferecida, estabilidade do framework, facilidade de manutenção, o custo de desenvolvimento multiplataforma e o tempo de mercado da aplicação \cite{dalmasso2013survey}.
+Conforme descrito em \cite{griss1998architecting} aplicações e componentes que que interagem entre sí utilizando uma arquitetura modular e baseada em camadas garantem estruturas e mecanismos consistentes.
 
-A grande maioria dos desenvolvedores e organizações querem atingir a maior fatia de mercado com seus aplicativos. Para tal é necessário que o aplicativo esteja disponível nas principais plataformas mobile como o iOS, Android e Windows Phone. 
+A separação de responsabilidades favorece a otimização de componentes, uma vez que a sua refatoração pode ser realizada sem afetar componentes adjacentes. Essa abordagem torna uma aplicação mais compreensível e facilita a manutenção de sistemas interdependentes \cite{meier2009microsoft}.
 
-Porém o desenvolvimento para estas plataformas requerem amplo conhecimento do desenvolvedor sobre as mesmas e sobre os seus respectivos \gls{sdk}, o que eleva o custo de desenvolvimento e a complexidade do processo. Para contrapor a esta barreira imposta pela pluralidade de plataformas de desenvolvimento móvel entra em cena a abordagem multiplataforma, capaz de reduzir o esforço de desenvolvimento e o tempo para lançamento de aplicativos no mercado \cite{dalmasso2013survey}.
+Uma arquitetura baseada em camadas favorece a separação de responsabilidades. Cada tipo de tarefa que deve ser realizado no contexto da aplicação deve ser organizado em grupos de tarefas relacionadas. Esse grupo dará origem a uma camada lógica que realizam tarefas com um propósito semelhante \cite{meier2009microsoft}. 
 
-Como citado em \cite{shehab2014reducing} a vantagem de custo e tempo de mercado proporcionado por esta abordagem está promovendo o surgimento de distintas plataformas que a adotam. Essas plataformas estão competindo pela adoção de desenvolvedores em características como o número de plataformas nativas suportadas, acesso a funções nativas dos dispositivos móveis, facilidade de acesso ao \gls{back-end} e por melhorias de performance. 
-
-\section{Cache de Aplicações Móveis}
-
-O paradigma cliente-servidor para aplicações móveis apresenta peculiaridades significativas quando comparado as aplicações tradicionais. Tais peculiaridades são provocadas sobretudo por dois fatores: perda de conectividade frequente e baixa largura de banda dos dispositivos móveis \cite{rathore2007overview}.
-Estes dois fatores combinados a outras limitações geram a necessidade de que seja reduzida a comunicação cliente servidor, tornando o mecanismo de cache local nos dispositivos móveis como uma solução viável \cite{rathore2007overview}.
-Sobretudo as seguintes limitações de recursos em dispositivos móveis merecem especial atenção no planejamento e desenvolvimento de mecanismos de cache em aplicações móveis: \cite{rathore2007overview}.
-\begin{enumerate}
-	\item Eficiência de pacotes transmitidos:
-	A quantidade de pacotes transmitidos e recebidos na comunicação com o servidor deve ser minimizada.
-	
-	\item Otimização de bateria:
-	O consumo de energia utilizado para executar o mecanismo de caching deve ser minimizado.
-\end{enumerate}
- 
- Em \cite{rathore2007overview} os mecanismos de cache são caracterizados por 3 componentes: granularidade de caching, estratégia de coerência de cache e política de substituição de cache.
- 
-
-
-\subsection{Granularidade de Cache}
-Granularidade de caching diz respeito a escolha do tipo correto de informação que deve ser mantido em cache para permitir a correta utilização do armazenamento do dispositivo.
-
-Em \cite{rathore2007overview} os seguintes níveis de granularidade são recomendados para aplicações móveis:
-
-\begin{enumerate}
-	\item Caching de Objetos: Todos os atributos de um objeto que são muito acessados são armazenados pelo cliente, independente se a primeira consulta poderia ser suprida apenas com um subconjunto dos atributos retornados pelo servidor.
-	
-	\item Caching de Atributos: Apenas os atributos que são relevantes para cada consulta são armazenados. Essa granularidade economiza largura de banda e espaço de armazenamento, elevando a taxa de sucesso de caching. Porém quando diferentes consultas precisam de diferentes atributos do mesmo objeto é melhor armazenar o objeto inteiro.
-	
-	\item Caching Hibrido: Todos os atributos de um objeto com alta probabilidade de serem acessados por consultas futuras também são armazenados.
-	
-	\item Caching Semântico: Os dados de caching são fragmentados e indexados de modo que quando uma nova consulta não é totalmente suprida pelos itens de cache disponíveis é disparada uma requisição para o servidor para obter apenas os dados complementares necessários.
-	
-\end{enumerate}
-
-\subsection{Estratégia de Coerência de Caching}
-Uma vez definido que informações devem ser mantidas em cache, o próximo passo é definir a estratégia de coerência de cache, que consiste em manter as informações do cache consistentes com os dados do servidor. Nesse processo o cliente reconhece as alterações realizadas no servidor e deve marcar o item desatualizado como inválido.
-
-Segundo \cite{rathore2007overview} uma invalidação de cache pode ocorrer por duas razões:
-\begin{enumerate}
-	\item Invalidação temporal-dependente:  Quando algum item é alterado no servidor.
-	\item Invalidação dependente de localização: Quando a mudança de localização do cliente provoca a invalidação do item.
-\end{enumerate}
-
-Apesar de muitos mecanismos de invalidação de cache terem sido propostos nas últimas décadas, em \cite{rathore2007overview} estes são classificados em 3 grandes categorias:
-
-\begin{enumerate}
-	\item Servidor com Controle de Estado: O servidor conhece o estado e os itens mantidos em cache por cada cliente. Cada vez que um item é alterado no servidor o mesmo notifica todos os clientes que cujo cache local estejam associados a este item da invalidação. Este mecanismo que dificulta o escalonamento é conhecido como \emph{push-based} (direção servidor-cliente).
-	\item Verificação do Cliente: A cada nova consulta que precisa ser suprida o cliente se comunica com o cliente para confirmar a validade do item armazenado no cache.
-	\item Servidor sem Controle de Estado: O servidor desconhece a localização ou conteúdo do cache do cliente, e dispara periodicamente relatórios indicando os itens alterados. Estes relatórios são avaliados pelo cliente para determinar se algum item do cache deve ser invalidado.
-\end{enumerate}
-
-\subsection{Política de Substituição de Caching}
-Após serem identificados os itens de cache inválidos, a politica de substituição de cache define como a informação armazenada no cliente deverá ser atualizada para refletir as mudanças no servidor.
-
-\section{Princípios de Separação de Responsabilidades da Aplicação em Camadas Lógicas}
+Independentemente se será empregada uma abordagem de camada mais estrita onde uma camada pode se comunicar imediatamente com camada adjacente, ou se pode ser considerada uma arquitetura mais flexível onde a comunicação entre camadas não adjacentes é permitida, deve ser favorecida sempre uma abstração no estabelecimento da comunicação. Tal abstração garantida através do estabelecimento de uma interface de comunicação entre camadas assegura a manutenção da alta coesão e do baixo acoplamento na arquitetura dos sistema \cite{meier2009microsoft}.
 
 \chapter{Metodologia}
+Este trabalho foi desenvolvimento considerando as seguinte etapas:
+
+\begin{enumerate}
+	
+	\item Realizar revisão bibliográfica sobre aplicações móveis multiplataforma sua motivação e características.
+	
+	\item Realizar revisão bibliográfica sobre os princípios e técnicas de cache de aplicações móveis.
+	
+	\item Identificar na literatura os condutores arquiteturais que devem ser considerados na definição de uma arquitetura de cache de aplicações móveis.
+	
+	\item Definir os componentes básicos de uma arquitetura que atenda aos condutores arquiteturais propostos.
+	
+	\item Definir de maneira detalhada os papeis e associações entre os componentes e mecanismos arquiteturais segundo preceitos da recomendação IEEE Standard 1471-2000 além das práticas de descrição arquitetural definidas em \cite{bass2012practice}\cite{bachmann2010DocumentingSoftware}.
+	
+	\item Empregar a metodologia ATAM para avaliar a consonância da arquitetura proposta para atender aos condutores arquiteturais considerados.
+\end{enumerate}
 
 \chapter{Desenvolvimento}
 
@@ -252,12 +244,9 @@ Após serem identificados os itens de cache inválidos, a politica de substitui�
 
 \subsection{SQLite}
 
-\subsection{JavaScript}
-
 \subsection{AngularJS}
 
 \subsection{Prova de Conceito da Arquitetura Proposta}
-
 
 \chapter[ChaConclusao]{Conclusão}
 
