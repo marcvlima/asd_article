@@ -123,6 +123,7 @@
 % ---
 
 \begin{document}
+\graphicspath{images}	
 \selectlanguage{brazil}
 \maketitle
 
@@ -145,7 +146,17 @@ Resumo em português.
 \chapter{Referencial Teórico}
 \section{Arquitetura de Software}
 
-Segundo \cite{bass2012practice} a arquitetura de software é um conjunto de estruturas necessárias para permitir racionalizar sobre um sistema, que compreende desde elementos de software os relacionamentos entre estes e propriedades definidas sobre ambos. Segundo os autores as seguintes 
+Segundo \cite{bass2012practice} a arquitetura de software é um conjunto de estruturas necessárias para permitir racionalizar sobre um sistema, que compreende desde elementos de software os relacionamentos entre estes e propriedades definidas sobre ambos.
+
+Martin Fowler com sua visão pragmática em \cite{fowler2002patterns} cita alguns pontos recorrentes que definem arquitetura de software:
+\begin{enumerate}
+	\item O mais elevado nível de separação do sistema em suas partes.
+	\item As decisões que são mais difíceis de serem alteradas.
+	\item Existem múltiplas arquiteturas em um sistema.
+	\item O que é arquiteturalmente significativo pode mudar ao longo do ciclo de vida do projeto.
+	\item Arquitetura se resume a tudo o que é importante.
+\end{enumerate}
+
 
 
 
@@ -234,9 +245,17 @@ Este trabalho foi desenvolvimento considerando as seguinte etapas:
 	\item Empregar a metodologia ATAM para avaliar a consonância da arquitetura proposta para atender aos condutores arquiteturais considerados.
 \end{enumerate}
 
-\chapter{Desenvolvimento}
-
 \section{Arquitetura Proposta}
+A proposta apresentada por este trabalho consiste em aplicar uma arquitetura baseada em camadas para solucionar o problema associado ao tratamento de cache em aplicações móveis multiplataforma.
+
+Este estilo arquitetural permite abstrair todas as funcionalidades relacionadas ao tratamento de cache de maneira modular separando as responsabilidades e elevando o nível de flexibilidade e manutenabilidade da solução.
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.7]{images/CamadasNivel0}
+	\caption{Camada de Gerênciamento de Cache e suas Interações}
+\end{figure}
+
 
 \subsection{Importancia de Tecnologias Abertas}
 

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<archimate:model xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:archimate="http://www.archimatetool.com/archimate" name="(new model)" id="b5346cd2" version="3.1.1">
+  <folder name="Business" id="bfa924dd" type="business"/>
+  <folder name="Application" id="4371d9b8" type="application">
+    <element xsi:type="archimate:ApplicationInterface" id="52908f57" name="Application Interface"/>
+  </folder>
+  <folder name="Technology" id="ef6b99ad" type="technology">
+    <element xsi:type="archimate:Node" id="26bb476f" name="Infraestrutura Backend"/>
+    <element xsi:type="archimate:Node" id="a54baee1" name="Dispositivo Móvel"/>
+    <element xsi:type="archimate:InfrastructureService" id="267bedfb" name="Infrastructure Service"/>
+    <element xsi:type="archimate:InfrastructureInterface" id="be3dfa14" name="Protocolo Http" interfaceType="1"/>
+  </folder>
+  <folder name="Motivation" id="3aac0997" type="motivation"/>
+  <folder name="Implementation &amp; Migration" id="8d5c2077" type="implementation_migration">
+    <element xsi:type="archimate:WorkPackage" id="b0356c7e" name="Camada de Serviços Rest"/>
+    <element xsi:type="archimate:WorkPackage" id="4c637a5a" name="Camada de Negocios"/>
+    <element xsi:type="archimate:WorkPackage" id="67cb5570" name="Camada de Persistencia"/>
+    <element xsi:type="archimate:WorkPackage" id="5bac4af3" name="Camada de Apresentação"/>
+    <element xsi:type="archimate:WorkPackage" id="f691d915" name="Camada de Código Compartilhado"/>
+    <element xsi:type="archimate:WorkPackage" id="60322029" name="Camada de Gerenciamento de Cache"/>
+    <element xsi:type="archimate:WorkPackage" id="f87429a5" name="Camada de Persistência Local"/>
+    <element xsi:type="archimate:WorkPackage" id="adf30943" name="Camada de Apresentação"/>
+    <element xsi:type="archimate:WorkPackage" id="cd637054" name="Camada de Negócios"/>
+    <element xsi:type="archimate:WorkPackage" id="209b69b9" name="Work Package"/>
+  </folder>
+  <folder name="Connectors" id="f54c9619" type="connectors"/>
+  <folder name="Relations" id="a5d74823" type="relations">
+    <element xsi:type="archimate:FlowRelationship" id="81551f86" source="b0356c7e" target="4c637a5a"/>
+    <element xsi:type="archimate:FlowRelationship" id="23aea904" source="4c637a5a" target="67cb5570"/>
+    <element xsi:type="archimate:AssociationRelationship" id="6549055f" source="60322029" target="be3dfa14"/>
+    <element xsi:type="archimate:AssociationRelationship" id="3e020c1a" source="b0356c7e" target="be3dfa14"/>
+    <element xsi:type="archimate:CompositionRelationship" id="193dbab2" source="f691d915" target="60322029"/>
+    <element xsi:type="archimate:CompositionRelationship" id="b933b7cc" source="f691d915" target="f87429a5"/>
+    <element xsi:type="archimate:CompositionRelationship" id="33515eea" source="f691d915" target="cd637054"/>
+    <element xsi:type="archimate:FlowRelationship" id="190c10de" source="adf30943" target="cd637054"/>
+    <element xsi:type="archimate:FlowRelationship" id="2ab5da8a" source="cd637054" target="60322029"/>
+    <element xsi:type="archimate:FlowRelationship" id="0d05204f" source="60322029" target="f87429a5"/>
+    <element xsi:type="archimate:CompositionRelationship" id="fcbb54f4" source="60322029" target="209b69b9"/>
+  </folder>
+  <folder name="Views" id="264c684e" type="diagrams">
+    <folder name="DivisaoCamadas" id="700683e7">
+      <element xsi:type="archimate:ArchimateDiagramModel" id="20eaf7f7" name="Camadas Restful Client">
+        <child xsi:type="archimate:DiagramObject" id="e181ffa1" textAlignment="2" archimateElement="26bb476f">
+          <bounds x="576" y="312" width="205" height="217"/>
+          <child xsi:type="archimate:DiagramObject" id="255630b8" textAlignment="2" fillColor="#efefef" archimateElement="b0356c7e">
+            <bounds x="12" y="36" width="169" height="37"/>
+            <sourceConnection xsi:type="archimate:Connection" id="d8f3b9eb" source="255630b8" target="7c354b6b" relationship="81551f86"/>
+            <sourceConnection xsi:type="archimate:Connection" id="56be4792" source="255630b8" target="b5d2396f" relationship="3e020c1a"/>
+          </child>
+          <child xsi:type="archimate:DiagramObject" id="7c354b6b" textAlignment="2" targetConnections="d8f3b9eb" fillColor="#efefef" archimateElement="4c637a5a">
+            <bounds x="12" y="108" width="169" height="37"/>
+            <sourceConnection xsi:type="archimate:Connection" id="4a659759" source="7c354b6b" target="f112192c" relationship="23aea904"/>
+          </child>
+          <child xsi:type="archimate:DiagramObject" id="f112192c" textAlignment="2" targetConnections="4a659759" fillColor="#efefef" archimateElement="67cb5570">
+            <bounds x="12" y="168" width="169" height="37"/>
+          </child>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="91543566" textAlignment="2" archimateElement="a54baee1">
+          <bounds x="240" y="84" width="541" height="217"/>
+          <child xsi:type="archimate:DiagramObject" id="c3dc6a9d" textAlignment="2" fillColor="#efefef" archimateElement="f691d915">
+            <bounds x="12" y="84" width="505" height="121"/>
+            <child xsi:type="archimate:DiagramObject" id="a5198e85" fontColor="#ffffff" textAlignment="2" targetConnections="47cc6856" fillColor="#ff8000" archimateElement="60322029">
+              <bounds x="192" y="36" width="133" height="61"/>
+              <sourceConnection xsi:type="archimate:Connection" id="3befa8b8" source="a5198e85" target="5ca683f8" relationship="0d05204f"/>
+              <sourceConnection xsi:type="archimate:Connection" id="7a18824b" source="a5198e85" target="b5d2396f" relationship="6549055f"/>
+            </child>
+            <child xsi:type="archimate:DiagramObject" id="5ca683f8" textAlignment="2" targetConnections="3befa8b8" fillColor="#efefef" archimateElement="f87429a5">
+              <bounds x="12" y="36" width="120" height="61"/>
+            </child>
+            <child xsi:type="archimate:DiagramObject" id="6b7df4b2" textAlignment="2" targetConnections="527a0d4e" fillColor="#efefef" archimateElement="cd637054">
+              <bounds x="372" y="36" width="120" height="61"/>
+              <sourceConnection xsi:type="archimate:Connection" id="47cc6856" source="6b7df4b2" target="a5198e85" relationship="2ab5da8a"/>
+            </child>
+          </child>
+          <child xsi:type="archimate:DiagramObject" id="98b31b6f" textAlignment="2" fillColor="#efefef" archimateElement="adf30943">
+            <bounds x="12" y="36" width="505" height="37"/>
+            <sourceConnection xsi:type="archimate:Connection" id="527a0d4e" source="98b31b6f" target="6b7df4b2" relationship="190c10de"/>
+          </child>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="b5d2396f" textAlignment="2" targetConnections="7a18824b 56be4792" archimateElement="be3dfa14">
+          <bounds x="240" y="348" width="325" height="25"/>
+        </child>
+        <child xsi:type="archimate:Note" id="762535e6" textAlignment="1">
+          <bounds x="240" y="396" width="313" height="133"/>
+          <content>Legenda</content>
+        </child>
+      </element>
+    </folder>
+    <element xsi:type="archimate:ArchimateDiagramModel" id="ce39cd5c" name="Default View"/>
+  </folder>
+</archimate:model>
