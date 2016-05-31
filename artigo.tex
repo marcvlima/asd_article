@@ -94,6 +94,11 @@
 	description={Num sistema que emprega a arquitetura cliente servidor, o termo back end e empregado para referenciar o conjunto de camadas que constituem a parte servidor}
 }
 
+\newglossaryentry{add}{
+	name={ADD},
+	description={Attribute Drive Design - Método desenvolvido pelo SEI para realizar o desenho arquitetural através da decomposição iterativa do sistema e seus subcomponentes}
+}
+
 \makeglossaries
 % ---
 % Altera as margens padrões
@@ -252,10 +257,43 @@ Este estilo arquitetural permite abstrair todas as funcionalidades relacionadas 
 
 \begin{figure}
 	\centering
+	\includegraphics[scale=0.5]{images/UtilityTree}
+	\caption{Árvore de Utilidade Adaptada: Stakeholders, Restrições, Objetivos, Necessidades, Condutores e suas Relações}
+\end{figure}
+
+
+Aplicando o método \gls{add} no passo inicial a arquitetura geral será descrita através da exposição de suas camadas mais granulares e suas responsabilidades.
+
+\begin{figure}
+	\centering
 	\includegraphics[scale=0.7]{images/CamadasNivel0}
 	\caption{Camada de Gerênciamento de Cache e suas Interações}
 \end{figure}
 
+\begin{description}
+	\item Camada de Apresentação:
+	Localizada no dispositivo móvel e sua principal responsabilidade é permitir a interação entre o usuário e a aplicação.
+	Numa aplicação móvel multiplataforma a camada de apresentação pode ser uniforme entre diferentes plataformas ou ser customizada para cada plataforma em que o sistema terá suporte.
+	\item Camada de Código Compartilhado:
+	Também localizada no dispositivo móvel constitui o coração da abordagem multiplataforma. Esta camada é responsável por agregar todos os componentes da aplicação que deverão serem compartilhados entre todas as plataformas suportadas empregando o mesmo code-base, para garantir consistência e reutilização de código.
+	\begin{description}
+		\item Camada de Negócios:
+		Contida no dispositivo móvel é responsável por concentrar as regras de negócios da aplicação intimamente relacionadas a apresentação, incluindo formatação exibição e resposta imediata para estímulos provenientes da interação do usuário.
+		\item Camada de Persistência Local: 
+		Presente no dispositivo móvel é responsável realizar e gerenciar o acesso aos mecanismos de persistência local da aplicação.
+		\item Camada de Gerenciamento de Cache:
+		Inserida no dispositivo móvel é o segmento principal da proposição arquitetural deste trabalho. Sua atribuição é gerenciar o cache local da aplicação onde devem ser implementados todos os mecanismos de granularidade, coerência e política de substituição de cache.
+	\end{description}
+	\item Camada de Serviços Rest:
+	Contida no \gls{back-end} é responsável por fornecer uma fachada com os serviços que podem ser consumidos pelo cliente local.
+	\item Camada de Negócios:
+	Também contida no \gls{back-end} é responsável por implementar todas as regras de negócio da aplicação bem como interagir com demais sistemas que fazem fronteira com a aplicação móvel, como por exemplo sistemas legados ou outros serviços internos da organização ou mesmo serviços de terceiros.
+	\item Camada de persistência:
+	Localizada na infraestrutura \gls{back-end} é responsável por gerenciar e implementar o armazenamento persistente dos dados da aplicação.
+\end{description}
+
+Na arquitetura proposta a Camada de Gerenciamento de Cache possui fronteira com três outras camadas possuindo um papel de destaque arquitetural por ser um elo chave entre os elementos do sistema e especialmente por conectar o segmento cliente ao segmento \gls{back-end} da aplicação.
+ 
 
 \subsection{Importancia de Tecnologias Abertas}
 
