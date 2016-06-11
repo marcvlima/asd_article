@@ -40,12 +40,14 @@
 \usepackage[alf]{abntex2cite}	% Citações padrão ABNT
 % ---
 
+\usepackage{float}
+
 %Muda o contador para sections.
 \usepackage{chngcntr}
 \counterwithin{section}{chapter}
 
 
-\titulo{Camada Lógica de Cache na Arquitetura Aplicações Móveis Multi Plataforma Baseada em Tecnologias Abertas}
+\titulo{Proposta de Arquitetura Genérica Aplicações Móveis Multi Plataforma com Serviços REST com Ênfase nos Mecanismos de Cache}
 \autor{Marcus Vinícius de Lima\thanks{\url{marcvlima@gmail.com}}}
 \local{Brasil}
 
@@ -99,6 +101,12 @@
 	description={Attribute Drive Design - Método desenvolvido pelo SEI para realizar o desenho arquitetural através da decomposição iterativa do sistema e seus subcomponentes}
 }
 
+\newglossaryentry{asr}{
+	name={ASR},
+	plural={ASRs},
+	description={Architecture Significant Requirement - Requisito Significativo para a Arquitetura}
+}
+
 \makeglossaries
 % ---
 % Altera as margens padrões
@@ -134,24 +142,39 @@
 
 \selectlanguage{english}
 \begin{abstract}
-Abstract text.
+The growing popularity of mobile applications brought as consequence the emergence of distinct platforms and operational systems, created by the attempt of the big computational players to acquire its space on that market.
+Even with the constantly technological evolution the limitations of mobile devices and networks yet represent a barrier for the mobile computing to reach its full potential that is allow users to realize their tasks at any time anywhere. To minimize the impacts of that scenario the cache mechanisms must be the prime part of the mobile applications architecture.
+The objective of this study is to propose an generic architecture of cross-platform mobile application with emphasis on cache mechanisms considering the main \glspl{asr} of that kind of application.
 \end{abstract}
 
 \selectlanguage{brazil}
 
 \begin{abstract}
-Resumo em português.
+A crescente popularização de aplicações móveis trouxe como consequência o surgimento de distintas plataformas e sistemas operacionais criados pela tentativa dos grandes players da computação de conquistarem seu espaço nesse mercado.
+Mesmo com a constante evolução tecnológica as limitações de dispositivos e das redes de telecomunicações móveis ainda representam uma barreira para que a computação móvel atinja seu potencial completo que é permitir que os usuários realizem suas tarefas a qualquer momento de qualquer lugar. Para minimizar os impactos deste cenário os mecanismos de cache devem ser parte primordial da arquitetura de aplicações móveis.
+O objetivo deste trabalho é propor uma arquitetura genérica de aplicações móveis multiplataforma com ênfase nos mecanismos de cache considerando os principais \glspl{asr} desse nicho de aplicações.
 \end{abstract}
 
 \tableofcontents
 
 \chapter{Introdução}
+A popularização do acesso dos usuários a dispositivos móveis e o crescimento da demanda por smartphones são naturalmente acompanhados pelo crescimento da necessidade do lançamento de aplicações móveis.
+Os grandes players do mercado computacional por sua vez querem garantir sua presença nessa nova ordem do consumo realizando o lançamento de suas próprias plataformas de dispositivos móveis.
+Essa corrida do mercado define um cenário com uma grande capilaridade de plataformas móveis. Dessa maneira garantir o alcance dos aplicativos aos usuários distribuídos entre plataformas distintas é extremamente oneroso para as organizações e fábricas de software.
+Tal realidade impulsionou a criação de técnicas e ferramentas para permitir a reutilização de código ao desenvolver aplicações móveis para diferentes plataformas, o que deu origem a abordagem de desenvolvimento móvel multi-plataforma.
+
 \section{Problema}
-\section{Objetivos}
+O maior objetivo da computação móvel é empoderar os usuários permitindo que os mesmos realizem suas tarefas a qualquer momento onde quer que estejam.
+Porém, as restrições tecnológicas e imposições de viabilidade comercial de dispositivos e redes móveis conduzem a limitações de poder de processamento,  armazenamento e autonomia de bateria de tais dispositivos e limitações de conectividade das redes.
+Para contrapor a este cenário limitante um dos aspectos mais importantes do desenvolvimento móvel passa a ser a existência de mecanismos de cache local nestas aplicações na tentativa de assegurar uma mobilidade efetiva para os usuários.
+
+\section{Objetivo}
+O objetivo deste trabalho é realizar a proposição de uma arquitetura genérica de aplicações móveis com foco especial no design de um mecanismo de cache independente de características de implementação que possa endereçar os principais \glspl{asr} de aplicações móveis distribuídas em sua apresentação mais comum cujo \gls{back-end} é implementado com a utilização de serviços REST.
+
 \chapter{Referencial Teórico}
 \section{Arquitetura de Software}
 
-Segundo \cite{bass2012practice} a arquitetura de software é um conjunto de estruturas necessárias para permitir racionalizar sobre um sistema, que compreende desde elementos de software os relacionamentos entre estes e propriedades definidas sobre ambos.
+Segundo \cite{bass2012practice} a arquitetura de software é um conjunto de estruturas necessárias para permitir racionalizar sobre um sistema, que compreende desde elementos de software, os relacionamentos entre estes e propriedades definidas sobre ambos.
 
 Martin Fowler com sua visão pragmática em \cite{fowler2002patterns} cita alguns pontos recorrentes que definem arquitetura de software:
 \begin{enumerate}
@@ -161,9 +184,6 @@ Martin Fowler com sua visão pragmática em \cite{fowler2002patterns} cita algun
 	\item O que é arquiteturalmente significativo pode mudar ao longo do ciclo de vida do projeto.
 	\item Arquitetura se resume a tudo o que é importante.
 \end{enumerate}
-
-
-
 
 \section{Aplicações Móveis Multiplataforma}
 Recentemente as aplicações móveis tem apresentado um crescimento expressivo. Desde a queda de popularidade das plataformas mobile BlackBerry, Bada e Symbian, iOS e Android tem adquirido uma força expressiva no mercado \cite{dalmasso2013survey}.
@@ -175,6 +195,13 @@ A grande maioria dos desenvolvedores e organizações querem atingir a maior fat
 Porém o desenvolvimento para estas plataformas requerem amplo conhecimento do desenvolvedor sobre as mesmas e sobre os seus respectivos \gls{sdk}, o que eleva o custo de desenvolvimento e a complexidade do processo. Para contrapor a esta barreira imposta pela pluralidade de plataformas de desenvolvimento móvel, entra em cena a abordagem multiplataforma, capaz de reduzir o esforço de desenvolvimento e o tempo para lançamento de aplicativos no mercado \cite{dalmasso2013survey}.
 
 Como citado em \cite{shehab2014reducing} a vantagem de custo e tempo de mercado proporcionado por esta abordagem está promovendo o surgimento de distintas plataformas que a adotam. Essas plataformas estão competindo pela adoção de desenvolvedores em características como o número de plataformas nativas suportadas, acesso a funções nativas dos dispositivos móveis, facilidade de acesso ao \gls{back-end} e por melhorias de performance. 
+
+\section{Serviços REST e Aplicações Móveis}
+Web-services é o mecanismo mais consagrado para assegurar a comunicação entre sistemas pela sua capacidade de oferecer interoperabilidade para sistemas distribuídos conectando componentes heterogêneos muitas vezes com plataformas divergentes e até de sistemas operacionais distintos \cite{hamad2010performance}.
+
+Os mecanismos arquiteturais como CORBA, SOAP, RMI e até mesmo o SOAP por possuírem uma sobrecarga considerável no intercâmbio de dados tem dificuldade de apresentar aderência ao cenário de aplicações móveis levando em consideração as características limitadoras dos dispositivos e redes de telecomunicações.
+
+Por sua vez a arquitetura REST, Representational State Transfer, por seus princípios, é naturalmente simples, leve e apresenta alta performance para garantir a interoperabilidade de sistemas heterogêneos na arquitetura cliente-servidor \cite{hamad2010performance}. Dessa maneira esta arquitetura é a candidata ideal para nortear a implementação dos serviços no componente \gls{back-end} de aplicações móveis e tal favoritismo tem sido amplamente consagrado pelo mercado.
 
 \section{Cache de Aplicações Móveis}
 
@@ -247,27 +274,45 @@ Este trabalho foi desenvolvimento considerando as seguinte etapas:
 	
 	\item Definir de maneira detalhada os papeis e associações entre os componentes e mecanismos arquiteturais segundo preceitos da recomendação IEEE Standard 1471-2000 além das práticas de descrição arquitetural definidas em \cite{bass2012practice}\cite{bachmann2010DocumentingSoftware}.
 	
-	\item Empregar a metodologia ATAM para avaliar a consonância da arquitetura proposta para atender aos condutores arquiteturais considerados.
 \end{enumerate}
 
-\section{Arquitetura Proposta}
+\chapter{Arquitetura Proposta}
 A proposta apresentada por este trabalho consiste em aplicar uma arquitetura baseada em camadas para solucionar o problema associado ao tratamento de cache em aplicações móveis multiplataforma.
 
 Este estilo arquitetural permite abstrair todas as funcionalidades relacionadas ao tratamento de cache de maneira modular separando as responsabilidades e elevando o nível de flexibilidade e manutenabilidade da solução.
 
-\begin{figure}
+A árvore de utilidade adaptada a seguir apresenta os \glspl{asr} que guiam a definição de arquitetura proposta por este trabalho.
+
+\begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.5]{images/UtilityTree}
 	\caption{Árvore de Utilidade Adaptada: Stakeholders, Restrições, Objetivos, Necessidades, Condutores e suas Relações}
 \end{figure}
 
+Dispositivos móveis possuem restrições de conectividade, espaço de armazenamento reduzido e limitações de bateria.
+
+O mercado competitivo de aplicações móveis exige redução de custos no processo de desenvolvimento o que requer manutenabilidade e adaptabilidade. Outra exigência mercadológica é por maior agilidade para lançar novos produtos ou features e ainda que os aplicativos estejam disponíveis no maior conjunto possível de plataformas dessa maneira alcançarão um volume maior de usuários em potencial.
+
+Usuários por sua vez requerem que suas aplicações tenham suporte offline para conseguir realizar suas tarefas sobre qualquer condição de conectividade.
+
+Considerando todos estes interesses e restrições os seguintes drivers são indispensáveis para que seja atingida uma arquitetura satisfatória:
+\begin{enumerate}
+	\item Suportar velocidades de upstream reduzidas.
+	\item Suportar baixas larguras de conexão.
+	\item Suportar instabilidade de conexão.
+	\item Otimizar o volume de dados armazenados.
+	\item Otimizar consumo de memória.
+	\item Reduzir necessidade de processamento.
+	\item Oferecer suporte multiplataforma.	
+\end{enumerate}
+
 
 Aplicando o método \gls{add} no passo inicial a arquitetura geral será descrita através da exposição de suas camadas mais granulares e suas responsabilidades.
 
-\begin{figure}
+\begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.7]{images/CamadasNivel0}
-	\caption{Camada de Gerênciamento de Cache e suas Interações}
+	\caption{Camada de Gerenciamento de Cache e suas Interações}
 \end{figure}
 
 \begin{description}
@@ -293,22 +338,103 @@ Aplicando o método \gls{add} no passo inicial a arquitetura geral será descrit
 \end{description}
 
 Na arquitetura proposta a Camada de Gerenciamento de Cache possui fronteira com três outras camadas possuindo um papel de destaque arquitetural por ser um elo chave entre os elementos do sistema e especialmente por conectar o segmento cliente ao segmento \gls{back-end} da aplicação.
+
+Como sequência do desenho arquitetural o próximo elemento a ser decomposto é a Camada de Gerenciamento de Cache devido a sua aderência e decidibilidade para atendimento dos \glspl{asr} propostos.
+
+O centro da estratégia de gerenciamento de cache é a utilização do padrão de comunicação baseado em mensagem (Message=Based Communication) \cite{meier2009microsoft} utilizando uma interface reconhecida entre todos os subelementos da Camada de Gerenciamento de Cache.
+
+O diagrama a seguir representa as entidades utilizadas para trocar informações entre os sub-componentes desta camada:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{images/Classes01}
+	\caption{Entidades do Gerenciamento de Cache}
+\end{figure}
+
+\begin{description}
+	\item Operação de Serviço:
+	Representa uma operação existente na camada de serviços Rest localizada no \gls{back-end}.
+	\begin{description}
+		\item Fator de Estratégia: Define qual o fator de estratégia de validação está associado a operação.
+		\item Assinatura: Mesma assinatura que representa o método Rest na Camada de Serviços do \gls{back-end}.
+		\item Intervalo Máximo Invalidação: Período máximo para que o resultado dessa operação permaneça válido no cache levando em consideração aspectos de negócio associado a operação.
+		\item Distância Máxima Invalidação: Distância/raio máximo para que o resultado dessa operação permaneça válido no cache levando em consideração aspectos de negócio associado a operação.
+	\end{description}
+	\item Requisição de Operação de Serviço:
+	Representa uma invocação de uma operação existente na camada de serviços Rest localizada no \gls{back-end}.
+	\begin{description}
+		\item Assinatura: Mesma assinatura que representa o método Rest na Camada de Serviços do \gls{back-end}.
+		\item Parâmetros JSON: Parâmetros de execução da operação que deverá ser executada.
+		\item Latitude: Latitude do dispositivo quando a operação foi requisitada pela camada de negócios.
+		\item Longitude: Longitude do dispositivo  quando a operação foi requisitada pela camada de negócios.
+		\item Desobedecer Cache: Indica se esta requisição não deverá ser suprida com dados armazenados em cache.
+		\item Data: Data e hora em que a operação foi requisitada pela camada de negócios.
+	\end{description}
+	\item Item de Cache:
+	Resultado da requisição de operação de Serviço armazenada no repositório local do dispositivo. Contém todos os atributos de Requisição de Operação de Serviço e agrega atributos de identificação e resultado.
+	\begin{description}
+		\item Identificador Item Repositório Local: Código que identifica o item de cache no repositório local.
+		\item Resultado JSON: Resultado da requisição realizada à Camada de Serviços representado no formato JSON.
+	\end{description}
+\end{description}
+
+O diagrama a seguir detalha os elementos internos desta camada e como eles se relacionam com as camadas fronteiriças.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{images/CamadasNivel1}
+	\caption{Detalhamento da Camada de Gerenciamento de Cache}
+\end{figure}
  
+ \begin{description}
+ 	\item Camada de Conversão de Operações:
+ 	A responsabilidade desta camada é adicionar a cada mensagem de requisição de negócio informações que sejam pertinentes ao tratamento de cache assegurando o mínimo envolvimento do código de negócio com a estratégia de cache que deverá ser adotada pela aplicação e seus mecanismos internos de funcionamento.
+ 	
+ 	Nessa camada serão definidas ocorrências das Operações de Serviço.
+ 	Cada requisição proveniente da camada de negócios deverá disparar uma ou mais Requisição de Operação de Serviço que serão submetidas para o componente Resolvedor de Operações.
+ 	
+ 	\item Resolvedor de Operações:
+ 	Este componente tem por objetivo determinar como a requisição de negócio deve ser resolvida, através de uma nova requisição a camada de serviços Rest do \gls{back-end} ou apenas consumir os dados preexistentes persistidos em repositório local para cada nova Requisição de Operação de Serviço proveniente da Camada de Conversão de Operações.
+ 	
+ 	Essa decisão será tomada com base nos seguintes critérios:
+ 	\begin{enumerate}
+ 		\item Caso a requisição não deva considerar dados em cache a resolução deverá ser concretizada diretamente através da invocação da camada de serviços no \gls{back-end}.
+ 		\item Caso contrário o componente deverá buscar no repositório de dados local do dispositivo um item de cache associado mesma operação utilizando os mesmos parâmetros da requisição que está sendo processada. Se nenhum resultado prévio for localizado deverá ser realizada a invocação do serviço no \gls{back-end}.
+ 		\item Caso seja localizado algum item de cache associado deverá ocorrer a validação se as restrições de intervalo de tempo, distância ou ambas impostas pela Operação de Serviço Associado estão sendo satisfeitas pela ocorrência disponível no repositório local.
+ 		Caso a validação seja positiva esta ocorrência do repositório local deverá ser retornada para a Camada de Conversão de Operações como o resultado da operação requisitada.
+ 		\item Caso o item de cache retornado pela consulta ao repositório local não seja validado pelas restrições da operação, este item deverá ser invalidado e deverá ser realizada uma invocação do serviço do \gls{back-end}.
+ 	\end{enumerate}
+ 	
+ 	\item Invocador de Operações:
+ 	Este componente é responsável por efetuar a invocação dos serviços Rest no BackEnd para responder às requisições de negócio e deverá ser acionado pelo Resolvedor de Operações.
+ 	
+ 	\item Armazenador de Resultado de Operações:
+ 	O objetivo deste componente é receber os resultados provenientes do Invocador de Operações e converte-los em um item de cache que possam ser persistidos no repositório local do dispositivo.
+ 	
+ \end{description}
 
-\subsection{Importancia de Tecnologias Abertas}
+O diagrama a seguir apresenta o fluxo do processo de gerenciamento de cache proposto nesta arquitetura:
 
-\subsection{Apache Cordova}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.36]{images/FluxoGerenciamentodeCache}
+	\caption{Fluxo Gerenciamento de Cache}
+\end{figure}
 
-\subsection{SQLite}
+\chapter{Conclusão}
+A guerra pelo mercado de aplicações móveis impulsiona grandes players a disputa-lo com o lançamento de sua própria plataforma. Dessa maneira, a abordagem multiplataforma será uma realidade cada vez mais imperativa no desenvolvimento de aplicações móveis, visto que para assegurar baixo custo de desenvolvimento e cumprir o time-to-market exigido pelo mercado é necessário técnicas de engenharia de software que otimizem a produtividade e garantam coesão entre as diferentes versões de um aplicativo no processo de desenvolvimento móvel.
 
-\subsection{AngularJS}
+Coesão entre versões não implica necessariamente que a aplicação tenha exatamente o mesmo comportamento em todas as plataformas. Especialistas em usabilidade alertam sobre a importância de considerar o fator associado a fidelidade do usuário as características de sua plataforma preferida. Dessa maneira manter o look-and-feel de cada plataforma é um requisito que deve ser considerado na abordagem multiplataforma.
 
-\subsection{Prova de Conceito da Arquitetura Proposta}
-
-\chapter[ChaConclusao]{Conclusão}
+A arquitetura proposta endereça os objetivos deste trabalho por satisfazer a todos aos \glspl{asr} propostos para aplicações móveis multiplataforma com camada de serviços REST.
 
 \section{Trabalhos Futuros}
-
+\begin{enumerate}
+	\item Realizar um estudo mais aprofundado sobre as categorias de aplicações móveis mais comuns em conjunto com as fábricas de software que atuem nesse ramo.
+	\item Propor modelos arquiteturais que sejam aderentes as diferentes categorias de aplicações móveis para acelerar o processo de desenvolvimento.
+	\item Criar templates funcionais de aplicações para permitir a rápida inicialização do desenvolvimento de aplicativos com base em seu conjunto de \glspl{asr}.
+	\item Investigar o tradeoff da Descrição Arquitetural no processo de desenvolvimento de aplicações móveis, com o objetivo de estabelecer um equilíbrio entre agilidade e benefícios da documentação arquitetural.
+\end{enumerate}
 \bibliography{artigo}{}
 
 % ----------------------------------------------------------
